@@ -54,7 +54,8 @@ fn main() -> Result<(), reqwest::Error> {
                 .text()
                 .parse::<DateTime<Utc>>()
                 .unwrap()
-                .to_rfc2822();
+                .format("%d/%m/%Y")
+                .to_string();
 
             let mut summary: String = entry
                 .get_child("summary", entry.ns().as_str())
@@ -67,7 +68,18 @@ fn main() -> Result<(), reqwest::Error> {
                 .nth(1)
                 .into_iter()
                 .collect();
+
             summary = summary.replace(">", "");
+            let tokens = summary.split(' ');
+            let mut take = tokens.clone().count();
+            if take > 9 {
+                take = 8
+            }
+            let description: Vec<&str> = tokens.take(take).collect();
+            summary = description.join(" ");
+            if take == 8 {
+                summary = summary + "...";
+            }
             return News {
                 title,
                 date,
