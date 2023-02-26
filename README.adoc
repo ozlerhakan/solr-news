@@ -1,0 +1,16 @@
+= Solr News
+
+Written in Rust, learn the last 5 announcements from SOLR using `solrnews` in any CLI.  
+
+.bash
+```
+$ cargo build
+$ cargo install --path .
+
+$ solrnews
+1. Apache Solr™ 9.1.1 available - 25/01/2023 - The Solr PMC is pleased to announce the...
+2. Apache Solr™ 9.1.0 available - 17/11/2022 - The Solr PMC is pleased to announce the...
+3. Java 17 bug affecting Solr - 21/10/2022 - Several users running Solr in production on OpenJDK...
+4. Solr 8 Docker image changes to Eclipse Temurin JDK - 20/10/2022 - The official docker image for Solr 8.11 has...
+5. Solr Docker images now pin the Linux release - 20/10/2022 - Solr 9 was released on May 12th, using...
+```

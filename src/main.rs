@@ -57,7 +57,7 @@ fn main() -> Result<(), reqwest::Error> {
                 .format("%d/%m/%Y")
                 .to_string();
 
-            let mut summary: String = entry
+            let summary: String = entry
                 .get_child("summary", entry.ns().as_str())
                 .map(|c| c.nodes())
                 .unwrap()
@@ -69,17 +69,7 @@ fn main() -> Result<(), reqwest::Error> {
                 .into_iter()
                 .collect();
 
-            summary = summary.replace(">", "");
-            let tokens = summary.split(' ');
-            let mut take = tokens.clone().count();
-            if take > 9 {
-                take = 8
-            }
-            let description: Vec<&str> = tokens.take(take).collect();
-            summary = description.join(" ");
-            if take == 8 {
-                summary = summary + "...";
-            }
+            let summary = summary_details(summary);
             return News {
                 title,
                 date,
@@ -97,4 +87,19 @@ fn main() -> Result<(), reqwest::Error> {
             );
         });
     Ok(())
+}
+
+fn summary_details(summary: String) -> String {
+    let mut summary = summary.replace(">", "");
+    let tokens = summary.split(' ');
+    let mut take = tokens.clone().count();
+    if take > 9 {
+        take = 8
+    }
+    let description: Vec<&str> = tokens.take(take).collect();
+    summary = description.join(" ");
+    if take == 8 {
+        summary = summary + "...";
+    }
+    summary.to_string()
 }
